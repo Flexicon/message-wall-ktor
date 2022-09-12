@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:14.4-alpine
+    environment:
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: message_wall
+    ports:
+      - "5432:5432"
