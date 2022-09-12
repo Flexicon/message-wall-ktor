@@ -1,5 +1,7 @@
 package com.flexicondev.messagewall.routes
 
+import com.flexicondev.messagewall.domain.Message
+import com.flexicondev.messagewall.http.responses.MessageResponse
 import io.ktor.server.application.call
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
@@ -8,11 +10,8 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 
-val dummyMessage = mapOf(
-    "id" to "1",
-    "text" to "Hello there",
-    "author" to "Obi-Wan Kenobi",
-    "timestamp" to "022-07-12T20:51+0000",
+val dummyMessage = MessageResponse.from(
+    Message(1, "Hello there", "Obi-Wan Kenobi")
 )
 
 fun Routing.messageRoutes() {
