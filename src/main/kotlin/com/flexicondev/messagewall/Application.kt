@@ -1,5 +1,6 @@
 package com.flexicondev.messagewall
 
+import com.flexicondev.messagewall.infra.postgres.DatabaseFactory
 import com.flexicondev.messagewall.plugins.configureHTTP
 import com.flexicondev.messagewall.plugins.configureMonitoring
 import com.flexicondev.messagewall.plugins.configureRouting
@@ -11,8 +12,10 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 // TODO: consider running app as native: https://ktor.io/docs/native-server.html
 fun Application.module() {
+    DatabaseFactory.init(environment.config)
+
     configureHTTP()
     configureMonitoring()
     configureSerialization()
-    configureRouting()
+    configureRouting(DatabaseFactory.messageRepository)
 }

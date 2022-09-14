@@ -1,38 +1,47 @@
 package com.flexicondev.messagewall.routes
 
 import com.flexicondev.messagewall.domain.Message
+import com.flexicondev.messagewall.domain.MessageRepository
+import com.flexicondev.messagewall.http.requests.CreateMessage
 import com.flexicondev.messagewall.http.responses.MessageResponse
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
+import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
+import org.joda.time.DateTimeZone
 
-val dummyMessage = MessageResponse.from(
-    Message(1, "Hello there", "Obi-Wan Kenobi")
-)
-
-fun Routing.messageRoutes() {
-    // TODO: implement with proper models and DB/service calls
+fun Routing.messageRoutes(repository: MessageRepository) {
     route("/messages") {
         get {
-            call.respond(listOf(dummyMessage))
+            call.respond(repository.findAllDescending().map { it.toResponse() })
         }
 
         post {
-            call.respond(mapOf("method" to "post"))
+            val payload = call.receive<CreateMessage>()
+            call.respond(repository.save(payload.toMessage()).toResponse())
         }
 
         get("/{id}") {
-//            val id = call.parameters["id"]
-            call.respond(dummyMessage)
+            val id = call.parameters["id"]?.toIntOrNull() ?: return@get call.respond(HttpStatusCode.BadRequest)
+            val message = repository.findBy(id) ?: throw NoSuchElementException("Message with id $id not found")
+
+            call.respond(message.toResponse())
         }
 
         delete("/{id}") {
-            val id = call.parameters["id"]
-            call.respond(mapOf("id" to id, "method" to "delete"))
+            val id = call.parameters["id"]?.toIntOrNull() ?: return@delete call.respond(HttpStatusCode.BadRequest)
+
+            repository.deleteBy(id)
+            call.respond(HttpStatusCode.NoContent)
         }
     }
 }
+
+fun Message.toResponse() = MessageResponse(
+    id.toString(), text, author, createdAt.toDateTime(DateTimeZone.UTC).toInstant()
+)

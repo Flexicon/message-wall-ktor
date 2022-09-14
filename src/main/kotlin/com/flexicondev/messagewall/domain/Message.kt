@@ -1,11 +1,11 @@
 package com.flexicondev.messagewall.domain
 
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import org.joda.time.DateTimeZone
+import org.joda.time.LocalDateTime
 
 data class Message(
     val id: Int? = null,
     val text: String,
     val author: String,
-    val createdAt: LocalDateTime = LocalDateTime.now(ZoneOffset.UTC),
+    val createdAt: LocalDateTime = LocalDateTime.now(DateTimeZone.UTC),
 )

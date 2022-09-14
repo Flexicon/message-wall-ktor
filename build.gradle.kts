@@ -26,6 +26,8 @@ dependencies {
     val ktorVersion = "2.1.1"
     val logbackVersion = "1.2.11"
     val exposedVersion = "0.17.14"
+    val postgresVersion = "42.3.3"
+    val mockitoKotlinVersion = "4.0.0"
 
     implementation("io.ktor:ktor-server-cors-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktorVersion")
@@ -33,9 +35,13 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-cio-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-server-request-validation:$ktorVersion")
+    implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("org.jetbrains.exposed:exposed:$exposedVersion")
+    implementation("org.postgresql:postgresql:$postgresVersion")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+    implementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
 }
