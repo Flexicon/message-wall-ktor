@@ -24,9 +24,9 @@ repositories {
 dependencies {
     val kotlinVersion = "1.7.10"
     val ktorVersion = "2.1.1"
-    val logbackVersion = "1.2.11"
+    val logbackVersion = "1.4.0"
     val exposedVersion = "0.17.14"
-    val postgresVersion = "42.3.3"
+    val postgresVersion = "42.5.0"
     val mockitoKotlinVersion = "4.0.0"
 
     implementation("io.ktor:ktor-server-cors-jvm:$ktorVersion")
@@ -43,5 +43,10 @@ dependencies {
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
-    implementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+
+    // Test containers
+    val testContainersVersion = "1.17.3"
+    testImplementation("org.testcontainers:junit-jupiter:$testContainersVersion")
+    testImplementation("org.testcontainers:postgresql:$testContainersVersion")
 }

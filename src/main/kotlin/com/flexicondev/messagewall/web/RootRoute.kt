@@ -1,4 +1,4 @@
-package com.flexicondev.messagewall.routes
+package com.flexicondev.messagewall.web
 
 import io.ktor.server.application.call
 import io.ktor.server.response.respond
