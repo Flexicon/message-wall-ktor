@@ -29,10 +29,6 @@ class PostgresMessageRepository : MessageRepository {
         update(message)
     }
 
-    override fun existsBy(id: Int): Boolean = transaction {
-        !Messages.select { Messages.id eq id }.empty()
-    }
-
     override fun deleteBy(id: Int) {
         transaction { Messages.deleteWhere { Messages.id eq id } }
     }
