@@ -13,10 +13,9 @@ object DatabaseFactory {
         val jdbcURL = config.property("ktor.database.jdbcURL").getString()
         val username = config.property("ktor.database.user").getString()
         val password = config.property("ktor.database.password").getString()
-        val databaseName = config.property("ktor.database.database").getString()
 
         val hikariDS = HikariDataSource().apply {
-            jdbcUrl = "$jdbcURL/$databaseName"
+            jdbcUrl = jdbcURL
             setUsername(username)
             setPassword(password)
             setDriverClassName(driverClassName)
