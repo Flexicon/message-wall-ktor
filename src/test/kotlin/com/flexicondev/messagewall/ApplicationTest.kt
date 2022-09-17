@@ -115,7 +115,7 @@ class ApplicationTest {
             assertEquals(payload.author, author)
         }.id
 
-        jsonClient.get("/messages/${messageID}").apply {
+        jsonClient.get("/messages/$messageID").apply {
             assertEquals(HttpStatusCode.OK, status)
             with(body<MessageResponse>()) {
                 assertEquals(messageID, id)
@@ -147,8 +147,8 @@ class ApplicationTest {
 
     private val ApplicationTestBuilder.jsonClient
         get() = createClient {
-        install(ContentNegotiation) {
-            json()
+            install(ContentNegotiation) {
+                json()
+            }
         }
-    }
 }
