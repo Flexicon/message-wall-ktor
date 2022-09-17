@@ -89,7 +89,7 @@ class ApplicationTest {
             assertEquals(HttpStatusCode.OK, status)
             assertEquals(
                 """
-                {"id":"${message.id}","text":"${message.text}","author":"${message.author}","timestamp":"$messageTimestamp"}
+                {"id":"${message.id}","text":"${message.text}","author":"${message.author}","timestamp":"${messageTimestamp}"}
                 """.trimIndent(),
                 bodyAsText()
             )
