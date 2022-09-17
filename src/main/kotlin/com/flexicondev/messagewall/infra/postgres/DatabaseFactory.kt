@@ -1,6 +1,7 @@
 package com.flexicondev.messagewall.infra.postgres
 
 import com.flexicondev.messagewall.domain.MessageRepository
+import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.config.ApplicationConfig
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -12,14 +13,14 @@ object DatabaseFactory {
         val jdbcURL = config.property("ktor.database.jdbcURL").getString()
         val username = config.property("ktor.database.user").getString()
         val password = config.property("ktor.database.password").getString()
-        val defaultDatabase = config.property("ktor.database.database").getString()
 
-        val database = Database.connect(
-            url = "$jdbcURL/$defaultDatabase",
-            driver = driverClassName,
-            user = username,
-            password = password
-        )
+        val hikariDS = HikariDataSource().apply {
+            jdbcUrl = jdbcURL
+            setUsername(username)
+            setPassword(password)
+            setDriverClassName(driverClassName)
+        }
+        val database = Database.connect(hikariDS)
 
         transaction(database) {
             SchemaUtils.create(Messages)

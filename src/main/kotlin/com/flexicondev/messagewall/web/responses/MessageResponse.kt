@@ -1,4 +1,4 @@
-package com.flexicondev.messagewall.http.responses
+package com.flexicondev.messagewall.web.responses
 
 import com.flexicondev.messagewall.serializers.InstantAsStringSerializer
 import kotlinx.serialization.Serializable

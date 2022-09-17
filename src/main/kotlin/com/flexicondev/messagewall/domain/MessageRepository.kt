@@ -7,8 +7,6 @@ interface MessageRepository {
 
     fun save(message: Message): Message
 
-    fun existsBy(id: Int): Boolean
-
     fun deleteBy(id: Int)
 
     fun deleteAll()

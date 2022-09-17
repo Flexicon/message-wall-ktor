@@ -1,4 +1,4 @@
-package com.flexicondev.messagewall.http.requests
+package com.flexicondev.messagewall.web.requests
 
 import com.flexicondev.messagewall.domain.Message
 import kotlinx.serialization.Serializable

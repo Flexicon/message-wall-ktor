@@ -1,6 +1,6 @@
 package com.flexicondev.messagewall.plugins
 
-import com.flexicondev.messagewall.http.requests.CreateMessage
+import com.flexicondev.messagewall.web.requests.CreateMessage
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application

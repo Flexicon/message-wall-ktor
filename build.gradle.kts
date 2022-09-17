@@ -24,10 +24,12 @@ repositories {
 dependencies {
     val kotlinVersion = "1.7.10"
     val ktorVersion = "2.1.1"
-    val logbackVersion = "1.2.11"
+    val logbackVersion = "1.4.0"
     val exposedVersion = "0.17.14"
-    val postgresVersion = "42.3.3"
+    val postgresVersion = "42.5.0"
+    val hikariCPVersion = "5.0.1"
     val mockitoKotlinVersion = "4.0.0"
+    val testContainersVersion = "1.17.3"
 
     implementation("io.ktor:ktor-server-cors-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktorVersion")
@@ -37,11 +39,15 @@ dependencies {
     implementation("io.ktor:ktor-server-cio-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-request-validation:$ktorVersion")
     implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("org.jetbrains.exposed:exposed:$exposedVersion")
     implementation("org.postgresql:postgresql:$postgresVersion")
+    implementation("com.zaxxer:HikariCP:$hikariCPVersion")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
-    implementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    testImplementation("org.testcontainers:junit-jupiter:$testContainersVersion")
+    testImplementation("org.testcontainers:postgresql:$testContainersVersion")
 }

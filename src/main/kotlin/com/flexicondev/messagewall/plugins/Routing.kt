@@ -1,8 +1,8 @@
 package com.flexicondev.messagewall.plugins
 
 import com.flexicondev.messagewall.domain.MessageRepository
-import com.flexicondev.messagewall.routes.messageRoutes
-import com.flexicondev.messagewall.routes.rootRoute
+import com.flexicondev.messagewall.web.messageRoutes
+import com.flexicondev.messagewall.web.rootRoute
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
 

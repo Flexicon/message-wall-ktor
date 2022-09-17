@@ -1,9 +1,9 @@
-package com.flexicondev.messagewall.routes
+package com.flexicondev.messagewall.web
 
 import com.flexicondev.messagewall.domain.Message
 import com.flexicondev.messagewall.domain.MessageRepository
-import com.flexicondev.messagewall.http.requests.CreateMessage
-import com.flexicondev.messagewall.http.responses.MessageResponse
+import com.flexicondev.messagewall.web.requests.CreateMessage
+import com.flexicondev.messagewall.web.responses.MessageResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.request.receive
