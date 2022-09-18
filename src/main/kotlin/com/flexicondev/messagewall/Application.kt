@@ -10,7 +10,6 @@ import io.ktor.server.cio.EngineMain
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
-// TODO: consider running app as native: https://ktor.io/docs/native-server.html
 fun Application.module() {
     DatabaseFactory.init(environment.config)
 
