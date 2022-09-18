@@ -1,6 +1,7 @@
 package com.flexicondev.messagewall.plugins
 
 import com.flexicondev.messagewall.web.requests.CreateMessage
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -14,13 +15,14 @@ import io.ktor.server.response.respond
 
 fun Application.configureHTTP() {
     install(CORS) {
+        anyHost()
+        allowHeader(HttpHeaders.ContentType)
         allowMethod(HttpMethod.Options)
         allowMethod(HttpMethod.Get)
         allowMethod(HttpMethod.Post)
         allowMethod(HttpMethod.Put)
         allowMethod(HttpMethod.Patch)
         allowMethod(HttpMethod.Delete)
-        anyHost()
     }
 
     install(RequestValidation) {
