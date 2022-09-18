@@ -7,6 +7,7 @@ import com.flexicondev.messagewall.web.requests.CreateMessage
 import com.flexicondev.messagewall.web.responses.MessageResponse
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -85,7 +86,7 @@ class ApplicationTest {
         val message = DatabaseFactory.messageRepository.save(Message(text = "Avada Kedavra", author = "Voldemort"))
         val messageTimestamp = message.createdAt.toDateTime(DateTimeZone.UTC).toInstant()
 
-        client.get("/messages/1").apply {
+        client.get("/messages/${message.id}").apply {
             assertEquals(HttpStatusCode.OK, status)
             assertEquals(
                 """
@@ -105,7 +106,7 @@ class ApplicationTest {
             contentType(ContentType.Application.Json)
             setBody(payload)
         }.apply {
-            assertEquals(HttpStatusCode.OK, status)
+            assertEquals(HttpStatusCode.Created, status)
         }
 
         val messageID = response.body<MessageResponse>().apply {
@@ -122,6 +123,21 @@ class ApplicationTest {
                 assertEquals(payload.text, text)
                 assertEquals(payload.author, author)
             }
+        }
+    }
+
+    @Test
+    fun testMessageDelete() = testApplication {
+        withTestConfig()
+
+        val message = DatabaseFactory.messageRepository.save(Message(text = "A mistake", author = "Oops"))
+
+        client.delete("/messages/${message.id}").apply {
+            assertEquals(HttpStatusCode.NoContent, status)
+        }
+
+        client.get("/messages/${message.id}").apply {
+            assertEquals(HttpStatusCode.NotFound, status)
         }
     }
 

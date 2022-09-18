@@ -23,7 +23,8 @@ fun Routing.messageRoutes(repository: MessageRepository) {
 
         post {
             val payload = call.receive<CreateMessage>()
-            call.respond(repository.save(payload.toMessage()).toResponse())
+            val message = repository.save(payload.toMessage())
+            call.respond(HttpStatusCode.Created, message.toResponse())
         }
 
         get("/{id}") {
