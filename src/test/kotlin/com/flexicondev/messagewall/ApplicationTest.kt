@@ -84,16 +84,15 @@ class ApplicationTest {
         withTestConfig()
 
         val message = DatabaseFactory.messageRepository.save(Message(text = "Avada Kedavra", author = "Voldemort"))
-        val messageTimestamp = message.createdAt.toDateTime(DateTimeZone.UTC).toInstant()
 
-        client.get("/messages/${message.id}").apply {
+        jsonClient.get("/messages/${message.id}").apply {
             assertEquals(HttpStatusCode.OK, status)
-            assertEquals(
-                """
-                {"id":"${message.id}","text":"${message.text}","author":"${message.author}","timestamp":"$messageTimestamp"}
-                """.trimIndent(),
-                bodyAsText()
-            )
+            body<MessageResponse>().apply {
+                assertEquals(message.id.toString(), id)
+                assertEquals(message.text, text)
+                assertEquals(message.author, author)
+                assertEquals(message.createdAt.toDateTime(DateTimeZone.UTC).toInstant(), timestamp)
+            }
         }
     }
 
