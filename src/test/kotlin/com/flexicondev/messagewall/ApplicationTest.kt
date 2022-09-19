@@ -75,7 +75,10 @@ class ApplicationTest {
 
         client.get("/messages/1").apply {
             assertEquals(HttpStatusCode.NotFound, status)
-            assertEquals("Message with id 1 not found", bodyAsText())
+            assertEquals(
+                """{"status":404,"title":"Not Found","detail":"Message with id 1 not found"}""",
+                bodyAsText()
+            )
         }
     }
 
