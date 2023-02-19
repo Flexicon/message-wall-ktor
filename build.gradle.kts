@@ -3,7 +3,7 @@ plugins {
 
     application
     kotlin("jvm") version kotlinVersion
-    id("io.ktor.plugin") version "2.1.1"
+    id("io.ktor.plugin") version "2.2.3"
     id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
@@ -29,7 +29,7 @@ repositories {
 
 dependencies {
     val kotlinVersion = "1.7.10"
-    val ktorVersion = "2.1.1"
+    val ktorVersion = "2.2.3"
     val logbackVersion = "1.4.0"
     val exposedVersion = "0.17.14"
     val postgresVersion = "42.5.0"
