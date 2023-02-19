@@ -13,12 +13,14 @@ object DatabaseFactory {
         val jdbcURL = config.property("ktor.database.jdbcURL").getString()
         val username = config.property("ktor.database.user").getString()
         val password = config.property("ktor.database.password").getString()
+        val maximumPoolSize = config.propertyOrNull("ktor.database.maximumPoolSize")?.getString()?.toInt()
 
         val hikariDS = HikariDataSource().apply {
             jdbcUrl = jdbcURL
             setUsername(username)
             setPassword(password)
             setDriverClassName(driverClassName)
+            maximumPoolSize?.let { this.maximumPoolSize = it }
         }
         val database = Database.connect(hikariDS)
 
