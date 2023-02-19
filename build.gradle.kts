@@ -32,7 +32,7 @@ dependencies {
     val ktorVersion = "2.2.3"
     val logbackVersion = "1.4.0"
     val exposedVersion = "0.17.14"
-    val postgresVersion = "42.5.0"
+    val postgresVersion = "42.5.1"
     val hikariCPVersion = "5.0.1"
     val mockitoKotlinVersion = "4.0.0"
     val testContainersVersion = "1.17.3"
