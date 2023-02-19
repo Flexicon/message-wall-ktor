@@ -30,15 +30,18 @@ fun Application.configureHTTP() {
         validate<CreateMessage> { payload ->
             val errors = mutableListOf<String>()
 
-            if (payload.author.isBlank())
+            if (payload.author.isBlank()) {
                 errors += "Author is required"
-            if (payload.text.isBlank())
+            }
+            if (payload.text.isBlank()) {
                 errors += "Text is required"
+            }
 
-            if (errors.isNotEmpty())
+            if (errors.isNotEmpty()) {
                 ValidationResult.Invalid(errors)
-            else
+            } else {
                 ValidationResult.Valid
+            }
         }
     }
 

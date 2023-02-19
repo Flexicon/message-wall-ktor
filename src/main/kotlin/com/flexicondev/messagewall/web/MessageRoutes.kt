@@ -44,5 +44,8 @@ fun Routing.messageRoutes(repository: MessageRepository) {
 }
 
 fun Message.toResponse() = MessageResponse(
-    id.toString(), text, author, createdAt.toDateTime(DateTimeZone.UTC).toInstant()
+    id.toString(),
+    text,
+    author,
+    createdAt.toDateTime(DateTimeZone.UTC).toInstant()
 )

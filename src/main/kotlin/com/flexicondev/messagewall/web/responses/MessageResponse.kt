@@ -10,5 +10,5 @@ data class MessageResponse(
     val text: String,
     val author: String,
     @Serializable(with = InstantAsStringSerializer::class)
-    val timestamp: Instant,
+    val timestamp: Instant
 )

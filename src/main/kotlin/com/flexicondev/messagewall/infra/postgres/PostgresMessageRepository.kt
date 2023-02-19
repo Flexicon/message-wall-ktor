@@ -65,7 +65,7 @@ class PostgresMessageRepository : MessageRepository {
         this[Messages.id],
         this[Messages.text],
         this[Messages.author],
-        this[Messages.createdAt].toLocalDateTime(),
+        this[Messages.createdAt].toLocalDateTime()
     )
 
     private fun Message.withId(id: Int) = Message(id, text, author, createdAt)

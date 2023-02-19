@@ -7,5 +7,5 @@ data class Message(
     val id: Int? = null,
     val text: String,
     val author: String,
-    val createdAt: LocalDateTime = LocalDateTime.now(DateTimeZone.UTC),
+    val createdAt: LocalDateTime = LocalDateTime.now(DateTimeZone.UTC)
 )

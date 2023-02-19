@@ -234,7 +234,7 @@ class ApplicationTest {
             "ktor.database.jdbcURL" to postgreSQLContainer.jdbcUrl,
             "ktor.database.user" to postgreSQLContainer.username,
             "ktor.database.password" to postgreSQLContainer.password,
-            "ktor.database.maximumPoolSize" to "2",
+            "ktor.database.maximumPoolSize" to "2"
         ).toList()
     )
 
