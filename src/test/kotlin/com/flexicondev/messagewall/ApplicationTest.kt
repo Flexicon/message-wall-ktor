@@ -4,6 +4,7 @@ import com.flexicondev.messagewall.domain.Message
 import com.flexicondev.messagewall.domain.MessageRepository
 import com.flexicondev.messagewall.infra.postgres.DatabaseFactory
 import com.flexicondev.messagewall.web.requests.CreateMessage
+import com.flexicondev.messagewall.web.responses.ApiError
 import com.flexicondev.messagewall.web.responses.MessageResponse
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -129,6 +130,81 @@ class ApplicationTest {
     }
 
     @Test
+    fun `creating new message should validate empty payload`() = testApplication {
+        withTestConfig()
+
+        val response = jsonClient.post("/messages") {
+            contentType(ContentType.Application.Json)
+            setBody("""{}""")
+        }.apply {
+            assertEquals(HttpStatusCode.BadRequest, status)
+        }
+
+        response.body<ApiError<String>>().apply {
+            assertEquals(HttpStatusCode.BadRequest.value, status)
+            assertEquals(HttpStatusCode.BadRequest.description, title)
+            assertEquals("Author is required, Text is required", detail)
+        }
+    }
+
+    @Test
+    fun `creating new message should validate blank fields`() = testApplication {
+        withTestConfig()
+        val payload = CreateMessage()
+
+        val response = jsonClient.post("/messages") {
+            contentType(ContentType.Application.Json)
+            setBody(payload)
+        }.apply {
+            assertEquals(HttpStatusCode.BadRequest, status)
+        }
+
+        response.body<ApiError<String>>().apply {
+            assertEquals(HttpStatusCode.BadRequest.value, status)
+            assertEquals(HttpStatusCode.BadRequest.description, title)
+            assertEquals("Author is required, Text is required", detail)
+        }
+    }
+
+    @Test
+    fun `creating new message should validate blank text field`() = testApplication {
+        withTestConfig()
+        val payload = CreateMessage(author = "McGee")
+
+        val response = jsonClient.post("/messages") {
+            contentType(ContentType.Application.Json)
+            setBody(payload)
+        }.apply {
+            assertEquals(HttpStatusCode.BadRequest, status)
+        }
+
+        response.body<ApiError<String>>().apply {
+            assertEquals(HttpStatusCode.BadRequest.value, status)
+            assertEquals(HttpStatusCode.BadRequest.description, title)
+            assertEquals("Text is required", detail)
+        }
+    }
+
+    @Test
+    fun `creating new message should validate blank author field`() = testApplication {
+        withTestConfig()
+        val payload = CreateMessage(text = "My anonymous message")
+
+        val response = jsonClient.post("/messages") {
+            contentType(ContentType.Application.Json)
+            setBody(payload)
+        }.apply {
+            assertEquals(HttpStatusCode.BadRequest, status)
+        }
+
+        response.body<ApiError<String>>().apply {
+            assertEquals(HttpStatusCode.BadRequest.value, status)
+            assertEquals(HttpStatusCode.BadRequest.description, title)
+            assertEquals("Author is required", detail)
+        }
+    }
+
+    @Test
     fun testMessageDelete() = testApplication {
         withTestConfig()
 
@@ -158,6 +234,7 @@ class ApplicationTest {
             "ktor.database.jdbcURL" to postgreSQLContainer.jdbcUrl,
             "ktor.database.user" to postgreSQLContainer.username,
             "ktor.database.password" to postgreSQLContainer.password,
+            "ktor.database.maximumPoolSize" to "2",
         ).toList()
     )
 
