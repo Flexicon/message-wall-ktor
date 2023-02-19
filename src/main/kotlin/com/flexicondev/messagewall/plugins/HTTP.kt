@@ -10,7 +10,6 @@ import io.ktor.server.application.install
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.requestvalidation.RequestValidation
 import io.ktor.server.plugins.requestvalidation.RequestValidationException
-import io.ktor.server.plugins.requestvalidation.ValidationResult
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
 
@@ -27,22 +26,7 @@ fun Application.configureHTTP() {
     }
 
     install(RequestValidation) {
-        validate<CreateMessage> { payload ->
-            val errors = mutableListOf<String>()
-
-            if (payload.author.isBlank()) {
-                errors += "Author is required"
-            }
-            if (payload.text.isBlank()) {
-                errors += "Text is required"
-            }
-
-            if (errors.isNotEmpty()) {
-                ValidationResult.Invalid(errors)
-            } else {
-                ValidationResult.Valid
-            }
-        }
+        validate(CreateMessage::validate)
     }
 
     install(StatusPages) {
