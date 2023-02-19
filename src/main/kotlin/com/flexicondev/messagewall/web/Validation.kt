@@ -20,4 +20,3 @@ class ValidationBuilder {
 
 inline fun validation(build: ValidationBuilder.() -> Unit) =
     ValidationBuilder().apply(build).build()
-
